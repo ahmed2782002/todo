@@ -1,0 +1,17 @@
+{
+  "appTitle": "المهام",
+  "add_new_task": "أضف مهمة جديدة",
+  "please_enter_task_title": "يرجى إدخال عنوان المهمة",
+  "your_task_title_must_be_at_least_4_characters": "يجب أن يكون عنوان المهمة 4 أحرف على الأقل",
+  "enter_task_title": "أدخل عنوان المهمة",
+  "please_enter_task_description": "يرجى إدخال وصف المهمة",
+  "your_task_Description_must_be_at_least_6_characters": "يجب أن يكون وصف المهمة 6 أحرف على الأقل",
+  "enter_task_description": "أدخل وصف المهمة",
+  "select_time": "اختر الوقت",
+  "add": "أضف" ,
+  "theme_Mode": "النمط",
+  "language": "اللغة",
+  "light": "نهاري",
+  "dark": "ليلي",
+  "settings": "إعدادات"
+}

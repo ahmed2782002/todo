@@ -1,0 +1,17 @@
+{
+  "appTitle": "Tasks",
+  "add_new_task": "Add New Task",
+  "please_enter_task_title": "Please enter task title",
+  "your_task_title_must_be_at_least_4_characters": "Your task title must be at least 4 characters",
+  "enter_task_title": "Enter task title",
+  "please_enter_task_description": "Please enter task description",
+  "your_task_Description_must_be_at_least_6_characters": "Your task description must be at least 6 characters",
+  "enter_task_description": "Enter task description",
+  "select_time": "Select Time",
+  "add": "Add",
+  "theme_Mode": "Theme Mode",
+  "language": "Language",
+  "settings": "Settings",
+  "light": "Light",
+  "dark": "Dark"
+}
