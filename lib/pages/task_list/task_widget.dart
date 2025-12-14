@@ -7,6 +7,7 @@ import 'package:to_do/core/provider/list_provider.dart';
 import '../../core/firebase/task.dart';
 import '../../core/theme/application_theme.dart';
 import '../edit_task/edite_task.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TaskWidgetItem extends StatelessWidget {
   TaskWidgetItem({super.key, required this.task});
@@ -17,14 +18,13 @@ class TaskWidgetItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var mediaQuery = MediaQuery.of(context).size;
-    provider = Provider.of(context);
+    provider = Provider.of<ListProvider>(context);
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       decoration: BoxDecoration(
         color: Color(0xFFFE4A49),
-        borderRadius: BorderRadius.circular(15.0),
+        borderRadius: BorderRadius.circular(15.r),
       ),
       child: Slidable(
         startActionPane: ActionPane(motion: const DrawerMotion(), children: [
@@ -32,8 +32,8 @@ class TaskWidgetItem extends StatelessWidget {
             onPressed: (_) {
               Navigator.pushNamed(context, EditTask.routeName, arguments: task);
             },
-            backgroundColor: Color(0xFF21B7CA),
-            borderRadius: BorderRadius.circular(15),
+            backgroundColor: const Color(0xFF21B7CA),
+            borderRadius: BorderRadius.circular(15.r),
             foregroundColor: Colors.white,
             icon: Icons.edit,
             label: 'Edit',
@@ -44,13 +44,13 @@ class TaskWidgetItem extends StatelessWidget {
                   .collection(Task.collectionName)
                   .doc(task.id)
                   .delete()
-                  .timeout(Duration(milliseconds: 200), onTimeout: () {
+                  .timeout(const Duration(milliseconds: 200), onTimeout: () {
                 provider.getAllTasksFromFireStore();
               });
             },
-            backgroundColor: Color(0xFFFE4A49),
+            backgroundColor: const Color(0xFFFE4A49),
             foregroundColor: Colors.white,
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(15.r),
             icon: Icons.delete,
             label: 'Delete',
           ),
@@ -58,15 +58,14 @@ class TaskWidgetItem extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: theme.colorScheme.onBackground,
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(15.r),
           ),
           child: Container(
-
-            height: mediaQuery.height * 0.15,
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            height: 0.17.sh, // زيادة ارتفاع الكارد عشان تكفي 3 سطور
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
             decoration: BoxDecoration(
               color: theme.colorScheme.onBackground,
-              borderRadius: BorderRadius.circular(15.0),
+              borderRadius: BorderRadius.circular(15.r),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,48 +75,45 @@ class TaskWidgetItem extends StatelessWidget {
                     color: task.isDone!
                         ? ApplicationTheme.isDoneColor
                         : theme.primaryColor,
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(15.r),
                   ),
-                  width: mediaQuery.width * 0.013,
-                  height: mediaQuery.height * 0.1,
+                  width: 0.013.sw,
+                  height: 0.1.sh,
                 ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Expanded(
-                        flex: 2,
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Text(
-                            task.title ?? "",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: task.isDone!
-                                ? TextStyle(
-                                    color: ApplicationTheme.isDoneColor,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                : theme.textTheme.titleMedium!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: theme.primaryColor,
-                                    fontSize: 22,
-                                  ),
+                      Padding(
+                        padding: EdgeInsets.all(10.w),
+                        child: Text(
+                          task.title ?? "",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: task.isDone!
+                              ? TextStyle(
+                            color: ApplicationTheme.isDoneColor,
+                            fontSize: 25.sp,
+                            fontWeight: FontWeight.bold,
+                          )
+                              : theme.textTheme.titleMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: theme.primaryColor,
+                            fontSize: 22.sp,
                           ),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                          top: 5,
-                          left: 10,
-                          right: 10,
-                          bottom: 10,
+                          top: 5.h,
+                          left: 10.w,
+                          right: 10.w,
+                          bottom: 10.h,
                         ),
                         child: Text(
                           task.description ?? "",
-                          maxLines: 2,
+                          maxLines: 2, // بدل 2 → 3 سطور
                           overflow: TextOverflow.ellipsis,
                           style: theme.textTheme.titleSmall!
                               .copyWith(color: theme.colorScheme.onSecondary),
@@ -128,30 +124,30 @@ class TaskWidgetItem extends StatelessWidget {
                 ),
                 task.isDone!
                     ? Text(
-                        "Done!",
-                        style: TextStyle(
-                          color: ApplicationTheme.isDoneColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                        ),
-                      )
+                  "Done!",
+                  style: TextStyle(
+                    color: ApplicationTheme.isDoneColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.sp,
+                  ),
+                )
                     : InkWell(
-                        onTap: () {
-                          task.isDone = true;
-                          provider.updateTask(task);
-                        },
-                        child: Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 7, horizontal: 20),
-                          width: mediaQuery.width * 0.18,
-                          height: mediaQuery.width * 0.08,
-                          decoration: BoxDecoration(
-                            color: theme.primaryColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Image.asset("assets/images/img.png"),
-                        ),
-                      ),
+                  onTap: () {
+                    task.isDone = true;
+                    provider.updateTask(task);
+                  },
+                  child: Container(
+                    padding:
+                    EdgeInsets.symmetric(vertical: 7.h, horizontal: 20.w),
+                    width: 0.18.sw,
+                    height: 0.08.sw,
+                    decoration: BoxDecoration(
+                      color: theme.primaryColor,
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    child: Image.asset("assets/images/img.png"),
+                  ),
+                ),
               ],
             ),
           ),

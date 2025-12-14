@@ -1,5 +1,6 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_do/core/provider/list_provider.dart';
@@ -14,7 +15,7 @@ import 'l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Init SharedPreferences
+  // Init Shared Preferences
   PrefsHelper.prefs = await SharedPreferences.getInstance();
 
   // Init Firebase
@@ -27,12 +28,20 @@ void main() async {
     ),
   );
 }
-// this is dev
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return ScreenUtilInit(
+      designSize: const Size(390, 844),
+      minTextAdapt: true,
+      builder: (_, __) => _buildMaterialApp(context),
+    );
+  }
+
+  Widget _buildMaterialApp(BuildContext context) {
     ListProvider appProvider = Provider.of<ListProvider>(context);
     return MaterialApp(
       theme: ApplicationTheme.lightTheme,
@@ -44,9 +53,9 @@ class MyApp extends StatelessWidget {
       locale: Locale(appProvider.currentLocale),
       initialRoute: SplashScreen.routeName,
       routes: {
-        HomeScreen.routeName: (context) => HomeScreen(),
+        HomeScreen.routeName: (_) => HomeScreen(),
         SplashScreen.routeName: (_) => SplashScreen(),
-        EditTask.routeName: (context) => EditTask(),
+        EditTask.routeName: (_) => EditTask(),
       },
     );
   }

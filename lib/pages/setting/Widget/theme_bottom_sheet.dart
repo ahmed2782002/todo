@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:provider/provider.dart';
 import 'package:to_do/pages/setting/Widget/selected_option_widget.dart';
@@ -16,7 +17,7 @@ class ThemeBottomSheet extends StatelessWidget {
     var appProvider = Provider.of<ListProvider>(context);
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      padding:  EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
       decoration: BoxDecoration(
         color: theme.primaryColor.withOpacity(.8),
       ),
@@ -36,7 +37,7 @@ class ThemeBottomSheet extends StatelessWidget {
                       selectedTitle: AppLocalizations.of(context)!.light,
                     )),
           SizedBox(
-            height: 30,
+            height: 30.h,
           ),
           InkWell(
               onTap: () {

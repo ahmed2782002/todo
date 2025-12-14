@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/provider/list_provider.dart';
@@ -28,7 +29,7 @@ class HorizontalDatePicker extends StatelessWidget {
     }
 
     return SizedBox(
-      height: 110,
+      height: 110.h,
       child: ListView.builder(
         controller: scrollController,
         scrollDirection: Axis.horizontal,
@@ -54,13 +55,13 @@ class HorizontalDatePicker extends StatelessWidget {
           return GestureDetector(
             onTap: () => listProvider.changeDate(date),
             child: Container(
-              width: 70,
-              margin: const EdgeInsets.symmetric(horizontal: 8),
+              width: 70.w,
+              margin:  EdgeInsets.symmetric(horizontal: 8.w),
               decoration: BoxDecoration(
                 color: highlight
                     ? theme.colorScheme.primary
                     : Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -69,15 +70,15 @@ class HorizontalDatePicker extends StatelessWidget {
                     _monthName(date.month),
                     style: TextStyle(
                       color: highlight ? Colors.white : Colors.black87,
-                      fontSize: 14,
+                      fontSize: 14.sp,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                   SizedBox(height: 4.h),
                   Text(
                     date.day.toString(),
                     style: TextStyle(
                       color: highlight ? Colors.white : Colors.black87,
-                      fontSize: 22,
+                      fontSize: 22.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

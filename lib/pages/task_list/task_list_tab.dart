@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/pages/task_list/task_widget.dart';
 import '../../core/provider/list_provider.dart';
@@ -27,13 +28,14 @@ class _TaskListTabState extends State<TaskListTab> {
       _scrollToToday(); // تمرير إلى اليوم الحالي
     });
   }
-//tab ..................
+
+  // تمرير الى اليوم الحالي في الهوريزونتال ديت بيكر
   void _scrollToToday() {
     final now = DateTime.now();
-    final first = DateTime.now().subtract(const Duration(days: 365));
+    final first = DateTime.now(); // بداية اليوم الحالي
 
     int index = now.difference(first).inDays;
-    double position = index * 86; // تقريبًا عرض العنصر + margin
+    double position = index * 86.w; // عرض العنصر + margin مع ScreenUtil
 
     _scrollController.animateTo(
       position,
@@ -46,45 +48,44 @@ class _TaskListTabState extends State<TaskListTab> {
   Widget build(BuildContext context) {
     var listProvider = Provider.of<ListProvider>(context);
     var theme = Theme.of(context);
-    var mediaQuery = MediaQuery.of(context).size;
 
     return Column(
       children: [
         Stack(
-          alignment: const Alignment(0, 2.4),
+          alignment: Alignment(0, 2.4),
           children: [
             Container(
               color: theme.primaryColor,
-              width: double.infinity,
-              height: mediaQuery.height * .21,
+              width: 1.sw, // full screen width
+              height: 0.21.sh, // 21% of screen height
               child: Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: EdgeInsets.all(30.0.sp),
                 child: Text(
                   AppLocalizations.of(context)!.appTitle,
-                  style: const TextStyle(
-                    fontSize: 30,
+                  style: TextStyle(
+                    fontSize: 30.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6),
-              margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
+              margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: BoxDecoration(
                 color: Colors.white54,
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: BorderRadius.circular(8.r),
               ),
               child: HorizontalDatePicker(
                 scrollController: _scrollController,
                 initialDate: listProvider.selectDate,
-                firstDate: DateTime.now().subtract(const Duration(days: 365)),
-                lastDate: DateTime.now().add(const Duration(days: 365)),
+                firstDate: DateTime.now(), // يبدأ من اليوم الحالي
+                lastDate: DateTime(DateTime.now().year, 12, 31), // باقي السنة
               ),
             ),
           ],
         ),
-        SizedBox(height: mediaQuery.height * .04),
+        SizedBox(height: 0.04.sh),
         Expanded(
           child: ListView.builder(
             itemCount: listProvider.tasksList.length,
@@ -97,4 +98,3 @@ class _TaskListTabState extends State<TaskListTab> {
     );
   }
 }
-
