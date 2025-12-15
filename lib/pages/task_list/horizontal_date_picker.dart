@@ -5,16 +5,10 @@ import 'package:provider/provider.dart';
 import '../../core/provider/list_provider.dart';
 
 class HorizontalDatePicker extends StatelessWidget {
-  final DateTime initialDate;
-  final DateTime firstDate;
-  final DateTime lastDate;
   final ScrollController scrollController;
 
   const HorizontalDatePicker({
     super.key,
-    required this.initialDate,
-    required this.firstDate,
-    required this.lastDate,
     required this.scrollController,
   });
 
@@ -22,28 +16,24 @@ class HorizontalDatePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final listProvider = Provider.of<ListProvider>(context);
-
-    List<DateTime> dates = [];
-    for (int i = 0; i <= lastDate.difference(firstDate).inDays; i++) {
-      dates.add(firstDate.add(Duration(days: i)));
-    }
+    final today = DateTime.now();
 
     return SizedBox(
       height: 110.h,
       child: ListView.builder(
         controller: scrollController,
         scrollDirection: Axis.horizontal,
-        itemCount: dates.length,
         itemBuilder: (context, index) {
-          final date = dates[index];
+          // كل index يولد يوم جديد بعد اليوم الحالي
+          final date = today.add(Duration(days: index));
 
           final isActive = date.year == listProvider.selectDate.year &&
               date.month == listProvider.selectDate.month &&
               date.day == listProvider.selectDate.day;
 
-          final isToday = date.year == DateTime.now().year &&
-              date.month == DateTime.now().month &&
-              date.day == DateTime.now().day;
+          final isToday = date.year == today.year &&
+              date.month == today.month &&
+              date.day == today.day;
 
           bool highlight = false;
           if (listProvider.isFirstOpen && isToday) {
@@ -56,7 +46,7 @@ class HorizontalDatePicker extends StatelessWidget {
             onTap: () => listProvider.changeDate(date),
             child: Container(
               width: 70.w,
-              margin:  EdgeInsets.symmetric(horizontal: 8.w),
+              margin: EdgeInsets.symmetric(horizontal: 8.w),
               decoration: BoxDecoration(
                 color: highlight
                     ? theme.colorScheme.primary
@@ -73,7 +63,7 @@ class HorizontalDatePicker extends StatelessWidget {
                       fontSize: 14.sp,
                     ),
                   ),
-                   SizedBox(height: 4.h),
+                  SizedBox(height: 4.h),
                   Text(
                     date.day.toString(),
                     style: TextStyle(

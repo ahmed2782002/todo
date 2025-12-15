@@ -78,9 +78,7 @@ class _TaskListTabState extends State<TaskListTab> {
               ),
               child: HorizontalDatePicker(
                 scrollController: _scrollController,
-                initialDate: listProvider.selectDate,
-                firstDate: DateTime.now(), // يبدأ من اليوم الحالي
-                lastDate: DateTime(DateTime.now().year, 12, 31), // باقي السنة
+
               ),
             ),
           ],
